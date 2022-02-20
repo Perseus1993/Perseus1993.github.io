@@ -6,19 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hello World | Perseus</title>
+  <title>Perseus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="0.前言本项目用Golang从底层写一个Map Reduce，是mit 计算机6.824分布式系统课程的第一次大作业​ 课程主页链接lab1是第一次作业，本菜鸡用了好几天独立完成，经过一次改版优化了数据结构和解决任务元数据并发环境下的data race问题，建议大家做之前有自己独立的思考，有很多可行方案都能完成任务。比如看到有的小伙伴采用master(coordinator)轮询slave(wo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/02/19/hello-world/index.html">
+<meta property="og:title" content="Perseus">
+<meta property="og:url" content="http://example.com/2022/02/20/MIT6.824%20Lab1%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Perseus">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="0.前言本项目用Golang从底层写一个Map Reduce，是mit 计算机6.824分布式系统课程的第一次大作业​ 课程主页链接lab1是第一次作业，本菜鸡用了好几天独立完成，经过一次改版优化了数据结构和解决任务元数据并发环境下的data race问题，建议大家做之前有自己独立的思考，有很多可行方案都能完成任务。比如看到有的小伙伴采用master(coordinator)轮询slave(wo">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-19T15:15:11.000Z">
-<meta property="article:modified_time" content="2022-02-19T15:15:11.000Z">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/jpeg/1524307/1633944151428-3d2ea110-5c2f-46be-8882-fb263ba4d5c9.jpeg#clientId=u64c63b91-368e-4&from=ui&height=216&id=R7MKY&margin=%5Bobject%20Object%5D&name=2.jpg&originHeight=684&originWidth=1234&originalType=binary&ratio=1&size=56191&status=done&style=none&taskId=u10740423-0d4b-4dcf-ba08-a844badb00a&width=389">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/jpeg/1524307/1633944151519-91379e5a-d0c5-4dd4-8acd-400333bf0995.jpeg#clientId=u64c63b91-368e-4&from=ui&height=342&id=ucca21035&margin=%5Bobject%20Object%5D&name=1.jpg&originHeight=969&originWidth=881&originalType=binary&ratio=1&size=71516&status=done&style=none&taskId=u03083ade-2fbd-444d-abfc-5b26af9d7c4&width=311">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1524307/1633944151513-addcb3a8-551e-49fc-bc5b-0aef93b8f034.png#clientId=u64c63b91-368e-4&from=ui&height=302&id=u9d46bdd3&margin=%5Bobject%20Object%5D&name=3.png&originHeight=756&originWidth=759&originalType=binary&ratio=1&size=72310&status=done&style=none&taskId=u3ad5628f-f0e8-4313-a054-b2db1b146f4&width=303">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/1524307/1633944151662-461caef9-b6c3-4c49-80dd-99f65c5d9387.png#clientId=u64c63b91-368e-4&from=ui&height=355&id=u5a9e5907&margin=%5Bobject%20Object%5D&name=4.png&originHeight=764&originWidth=710&originalType=binary&ratio=1&size=71301&status=done&style=none&taskId=ue3144161-49f0-4cc8-bd23-528631dfc15&width=330">
+<meta property="og:image" content="http://example.com/img/2.jpg#id=reCij&originalType=binary&ratio=1&status=done&style=none&width=50">
+<meta property="article:published_time" content="2022-02-20T06:00:01.007Z">
+<meta property="article:modified_time" content="2022-02-20T06:18:37.116Z">
 <meta property="article:author" content="perseus">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2021/jpeg/1524307/1633944151428-3d2ea110-5c2f-46be-8882-fb263ba4d5c9.jpeg#clientId=u64c63b91-368e-4&from=ui&height=216&id=R7MKY&margin=%5Bobject%20Object%5D&name=2.jpg&originHeight=684&originWidth=1234&originalType=binary&ratio=1&size=56191&status=done&style=none&taskId=u10740423-0d4b-4dcf-ba08-a844badb00a&width=389">
   
     <link rel="alternative" href="/atom.xml" title="Perseus" type="application/atom+xml">
   
@@ -146,39 +152,176 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MIT6.824 Lab1代码实现" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Hello World
-    </h1>
-  
-
-        
-        <a href="/2022/02/19/hello-world/" class="archive-article-date">
-  	<time datetime="2022-02-19T15:15:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-19</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <p><a name="UY5un"></a></p>
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p><br />本项目用Golang从底层写一个Map Reduce，是mit 计算机6.824分布式系统课程的第一次大作业<br />​</p>
+<p>课程主页<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/schedule.html">链接</a><br /><br><br />lab1是第一次作业，本菜鸡用了好几天独立完成，经过一次改版优化了数据结构和解决任务元数据并发环境下的data race问题，建议大家做之前有自己独立的思考，有很多可行方案都能完成任务。比如看到有的小伙伴采用master(coordinator)轮询slave(worker)进行交互，我是用slave定时发送请求触发master懒执行大部分任务（后面会聊到原因）。也有的小伙伴用队列增删加锁实现并发安全，本人用的golang自带的channel作为任务队列。不得不感叹人家本科生就有机会学这么有意思的课程，听说lab2更酸爽，后面会接着去冲塔。总之，集中一段时间做这个lab1挺有趣的。<br /><br><br />我的代码在这里 ：<a target="_blank" rel="noopener" href="https://gitee.com/songcanyuan/mit6.824">送餐员小李Gitee</a><br /></p>
+<p><a name="RCNOq"></a></p>
+<h2 id="1-实验准备"><a href="#1-实验准备" class="headerlink" title="1.实验准备"></a>1.实验准备</h2><span id="more"></span>
+<ul>
+<li><p>MapReduce论文阅读 </p>
+</li>
+<li><p>Golang入门:需要掌握 基本语法&#x2F;IDE配置&#x2F;数组&#x2F;面向对象&#x2F;管道协程，小案例都实现一遍即可,十几个小时够了<br /><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ME411Y71o?from=search&seid=3637642705382455331&spm_id_from=333.337.0.0">Golang核心-韩顺平</a> </p>
+</li>
+<li><p>阅读 lab1 note    <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/labs/lab-mr.html"> lab1</a><br />看下mrsequential.go的流程，全程一个worker干到底无coordinator，看下map,reduce函数的加载和数据的流向</p>
+</li>
+</ul>
+<p><a name="cQfSV"></a></p>
+<h3 id="1-1-goland配置调试环境"><a href="#1-1-goland配置调试环境" class="headerlink" title="1.1 goland配置调试环境"></a>1.1 goland配置调试环境</h3><ul>
+<li><strong>windows</strong></li>
+</ul>
+<p><br />windows不支持动态插件编译,硬塞一个linux编译好的so文件也不行，当然可以通过改代码的形式把map reduce 的wordcount函数硬编码进main&#x2F;worker.go,但不建议这样做后面会很麻烦。<br /></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buildmode=plugin not supported on windows/amd64</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p><br />VMware搞个Ubuntu,然后golang,goland配置好<br /><br><br />Ubuntu 16 <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/ubuntu-releases/16.04/ubuntu-16.04.6-desktop-i386.iso">镜像下载</a><br />VMware <a target="_blank" rel="noopener" href="https://www.onlinedown.net/download/2062?module=download&t=website">下载</a><br /><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41782425/article/details/85119258">VMware如何安装Ubuntu</a><br /></p>
+<ul>
+<li><strong>linux</strong></li>
+</ul>
+<p><br />GOPATH选择git clone下来的文件夹6.824<br /><br><br />GOROOT是golang的安装位置<br /><br><br />wc.so运行前每次都要重新build,因此在写个build-wc.sh脚本放在main路径下面 configuration取名”build wc”<br /><br><br />也可以在脚本加一个去掉”mr-“开头文件的句子，把后面频繁调试mr程序生成的结果文件去掉，省的每次运行前都去手删<br /></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go build -buildmode=plugin ../mrapps/wc.go</span><br><span class="line"><span class="meta"># </span><span class="language-bash"><span class="built_in">rm</span> -f mr-*</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/jpeg/1524307/1633944151428-3d2ea110-5c2f-46be-8882-fb263ba4d5c9.jpeg#clientId=u64c63b91-368e-4&from=ui&height=216&id=R7MKY&margin=%5Bobject%20Object%5D&name=2.jpg&originHeight=684&originWidth=1234&originalType=binary&ratio=1&size=56191&status=done&style=none&taskId=u10740423-0d4b-4dcf-ba08-a844badb00a&width=389" alt="2.jpg"><br />mrsequential.go 最下面的Before launch点击加号Run Another Configuration添加”build wc”，这样每次运行之前都build一下wc.so<br /><img src="https://cdn.nlark.com/yuque/0/2021/jpeg/1524307/1633944151519-91379e5a-d0c5-4dd4-8acd-400333bf0995.jpeg#clientId=u64c63b91-368e-4&from=ui&height=342&id=ucca21035&margin=%5Bobject%20Object%5D&name=1.jpg&originHeight=969&originWidth=881&originalType=binary&ratio=1&size=71516&status=done&style=none&taskId=u03083ade-2fbd-444d-abfc-5b26af9d7c4&width=311" alt="1.jpg"><br /></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 至此mrsequential.go 应该可以在goland运行起来了</li>
+</ul>
+<p>​</p>
+<p>同理mrworker.go也需要这样配置<br /><img src="https://cdn.nlark.com/yuque/0/2021/png/1524307/1633944151513-addcb3a8-551e-49fc-bc5b-0aef93b8f034.png#clientId=u64c63b91-368e-4&from=ui&height=302&id=u9d46bdd3&margin=%5Bobject%20Object%5D&name=3.png&originHeight=756&originWidth=759&originalType=binary&ratio=1&size=72310&status=done&style=none&taskId=u3ad5628f-f0e8-4313-a054-b2db1b146f4&width=303" alt="3.png"><br /><br><br />mrcoordinator.go 需要将所有mian下面的txt文本加入进去<br /></p>
+<blockquote>
+<p>pg-being_ernest.txt pg-dorian_gray.txt pg-frankenstein.txt pg-grimm.txt pg-huckleberry_finn.txt pg-metamorphosis.txt pg-sherlock_holmes.txt pg-tom_sawyer.txt</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/1524307/1633944151662-461caef9-b6c3-4c49-80dd-99f65c5d9387.png#clientId=u64c63b91-368e-4&from=ui&height=355&id=u5a9e5907&margin=%5Bobject%20Object%5D&name=4.png&originHeight=764&originWidth=710&originalType=binary&ratio=1&size=71301&status=done&style=none&taskId=ue3144161-49f0-4cc8-bd23-528631dfc15&width=330" alt="4.png"><img src="/img/2.jpg#id=reCij&originalType=binary&ratio=1&status=done&style=none&width=50"><br /><br><br /></p>
+<p><a name="u0qTg"></a></p>
+<h2 id="2-任务梳理"><a href="#2-任务梳理" class="headerlink" title="2.任务梳理"></a>2.任务梳理</h2><p><br />lab1 note 里面的内容，内容梳理，一开始比较模糊也没关系，做到哪里回看就行<br /></p>
+<p><a name="idsh0"></a></p>
+<h3 id="2-1-描述"><a href="#2-1-描述" class="headerlink" title="2.1 描述"></a>2.1 描述</h3><p><br />实现分布式mr,一个coordinator,一个worker（启动多个）,在这次实验都在一个机器上运行。worker通过rpc和coordinator交互。worker请求任务,进行运算,写出结果到文件。coordinator需要关心worker的任务是否完成，在超时情况下将任务重新分配给别的worker。<br /></p>
+<p><a name="oVwtW"></a></p>
+<h3 id="2-2-规则"><a href="#2-2-规则" class="headerlink" title="2.2 规则"></a>2.2 规则</h3><ul>
+<li>map阶段需要将中间keys分成nReduce个数, nReduce通过main&#x2F;mrcoordinator.go传给MakeCoordinator()</li>
+<li>worker需要将第X个reduce task结果放到mr-out-X中。</li>
+<li>mr-out-X要一行一行生成,kv形式。main&#x2F;mrsequential.go中有，拿来就完事了</li>
+<li>main&#x2F;mrcoordinator.go从mr&#x2F;coordinator.go 的 Done()方法得知任务完成并关闭自己。</li>
+<li>任务都完成后，worker也得关闭</li>
+</ul>
+<p><a name="deuu4"></a></p>
+<h3 id="2-3-提示"><a href="#2-3-提示" class="headerlink" title="2.3 提示"></a>2.3 提示</h3><ul>
+<li>一开始可以从mr&#x2F;worker.go的 Worker()方法做，发送rpc给coordinator请求任务，然后coordinator分配任务，然后worker读文件并且map函数处理。</li>
+<li>map reduce函数都是通过go插件装载 (.so文件)</li>
+<li>mr&#x2F; 文件变了就需要重新build</li>
+<li>都在一个文件系统,worker天然实现文件共享，先凑合着起步</li>
+<li>中间文件命名 mr-X-Y X是map任务号，y是reduce任务号</li>
+<li>worker的map方法用json存储中间kv对，reduce再读回来，因为真正分布式worker都不在一个机器上，涉及网络传输，所以用json编码解码走个过场。</li>
+<li>worker的map可以用 worker.go里面的ihash(key)得到特定key的reduce任务号</li>
+<li>mrsequential.go 代码可以借鉴</li>
+<li>coordinator里面的共享数据需要加锁</li>
+<li>worker有时候需要等待,比如当map任务都分发出去了,有的worker完成后又来申请任务，此时还有map未完成,reduce不能开始，这个worker需要等待下</li>
+<li>如果任务重试机制，记得不要生成重复任务</li>
+<li>mrapps&#x2F;crash.go 随机干掉map reduce,看crash.go的代码是有一定几率让worker直接退出或者长时间延迟,可以用来测试恢复功能。这个逻辑是整合在map reduce函数里面的，注意worker被干掉时候任务已经拿到手了。</li>
+<li>确保没有人在出现崩溃时观察部分写入的文件，用ioutil.TempFile创建临时文件，用os.Rename重命名</li>
+</ul>
+<p><a name="M8DMT"></a></p>
+<h2 id="3-开始做任务"><a href="#3-开始做任务" class="headerlink" title="3.开始做任务"></a>3.开始做任务</h2><p><br />每一步提示思路，是我的心路历程，应该符合大多数人的逻辑<br /></p>
+<p><a name="v1KYa"></a></p>
+<h3 id="3-1-小目标：coordinator分配好任务worker取到后打印出来"><a href="#3-1-小目标：coordinator分配好任务worker取到后打印出来" class="headerlink" title="3.1 小目标：coordinator分配好任务worker取到后打印出来"></a>3.1 小目标：coordinator分配好任务worker取到后打印出来</h3><p><br />首先目标锁定在coordinator和worker的互动，其他的都不需要考虑，worker打印出来自己要做任务的文件名<br /></p>
+<ul>
+<li><p>mrsequential.go 里面逻辑看懂 </p>
+</li>
+<li><p>看懂coordinator和worker的rpc交互流程<br />call 函数通过1234端口传入args和reply的内存地址，调用rpcname（Coordinator.函数名），通过反射机制”远程”调用Coordinator的该函数，Coordinator通过内存地址读取入参写出结果。worker.go里面的Worker方法调用CallExample，先运行Coordinator，再运行worker，看看worker端打印返回来的经过Coordinator加工过的数字 </p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+至此worker和coordinator可以互动了 </p>
+</li>
+<li><p>发放给worker任务的结构体<br />Job类型（枚举常量）：JobType,以便worker知道这是Map任务还是Reduce任务。<br />InputFile 文件名数组 ：map情况数组里面就一个分配给worker的文件（Hadoop里面大文件是需要切块的，但是这里面的文件都很小就不切了直接一个文件给一个worker）,reduce情况下是worker需要选取的一些需要聚合到一起的中间文件<br />JobId&#x2F;ReducerNum  worker需要知道这些以便生成中间结果文件”mr-tmp-x-y”<br />x是jobid,y是经过hash后的reduce id, y用来标识哪些文件汇入同一个reduce</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Job <span class="keyword">struct</span> &#123;</span><br><span class="line">    JobType    JobType</span><br><span class="line">    InputFile  []<span class="type">string</span></span><br><span class="line">    JobId      <span class="type">int</span></span><br><span class="line">    ReducerNum <span class="type">int</span></span><br><span class="line">    <span class="comment">//TmpFileList []string</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<ul>
+<li>任务存放</li>
+</ul>
+<p><br />放channel里面就行，省得自己写队列的各种方法，还能天然并发安全<br /><br><br />channel 是golang特有的类型化消息的队列，可以通过它们发送类型化的数据在协程之间通信，可以避开所有内存共享导致的坑；通道的通信方式保证了同步性。数据通过通道：同一时间只有一个协程可以访问数据：所以不会出现数据竞争，设计如此。数据的归属（可以读写数据的能力）被传递。<br /><br><br />因此Coordinator定义了两个channel来存放做好的map和reduce,jobMetaHolder(元数据管理相关)和CoordinatorCondition（coordinator状态）,暂时不用管可以注释掉<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">type</span> Coordinator <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">// channel which hold uncompleted task</span></span><br><span class="line">	JobChannelMap        <span class="keyword">chan</span> *Job</span><br><span class="line">	JobChannelReduce     <span class="keyword">chan</span> *Job</span><br><span class="line">	ReducerNum           <span class="type">int</span></span><br><span class="line">	MapNum               <span class="type">int</span></span><br><span class="line">	CoordinatorCondition Condition</span><br><span class="line">	uniqueJobId          <span class="type">int</span></span><br><span class="line">	jobMetaHolder        JobMetaHolder</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<ul>
+<li>map任务制作<br />Coordinator制作map任务，在一开始程序运行的时候就执行</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> makeMapJobs(files []<span class="type">string</span>) &#123;</span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> files &#123;</span><br><span class="line">		id := c.generateJobId()</span><br><span class="line">		<span class="comment">//fmt.Println(&quot;making map job :&quot;, id)</span></span><br><span class="line">		job := Job&#123;</span><br><span class="line">			JobType:    MapJob,</span><br><span class="line">			InputFile:  []<span class="type">string</span>&#123;v&#125;,</span><br><span class="line">			JobId:      id,</span><br><span class="line">			ReducerNum: c.ReducerNum,</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这下面暂时不需要</span></span><br><span class="line">		jobMetaINfo := JobMetaInfo&#123;</span><br><span class="line">			condition: JobWaiting,</span><br><span class="line">			JobPtr:    &amp;job,</span><br><span class="line">		&#125;</span><br><span class="line">		c.jobMetaHolder.putJob(&amp;jobMetaINfo)</span><br><span class="line">		fmt.Println(<span class="string">&quot;making map job :&quot;</span>, &amp;job)</span><br><span class="line">		c.JobChannelMap &lt;- &amp;job</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//这上面暂时不需要</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;done making map jobs&quot;</span>)</span><br><span class="line">	c.jobMetaHolder.checkJobDone()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<p>  <br />照着把那个样例rpc交互函数写个distribute方法，把的coordinate端和worker端入参数据类型分别改下，加入这句话即可将JobChannelMap里面的一个job给reply<br />​<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*reply = *&lt;-c.JobChannelMap</span><br></pre></td></tr></table></figure>
+
+<p><br />worker端对reply取InputFile第一个元素，打印结果如下，worker线程取到任务了  </p>
+<blockquote>
+<p> worker get job which is pg-being_ernest.txt</p>
+</blockquote>
+<p>​<br /></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 3.1小目标完成</li>
+</ul>
+<p><a name="PeYXj"></a></p>
+<h3 id="3-2-worker通过传过来的文件名做map任务，写出结果"><a href="#3-2-worker通过传过来的文件名做map任务，写出结果" class="headerlink" title="3.2  worker通过传过来的文件名做map任务，写出结果"></a>3.2  worker通过传过来的文件名做map任务，写出结果</h3><p><br />这个步骤简单粗暴，照着mrsequential.go里面写一下，记得用ihash处理下key分成Nreduce份用json编码后写出到”mr-tmp-x-y”文件。注意mr论文这步是有排序的，因为真正生产活动数据量是非常巨大的，map端提前排序好后，reduce的排序压力会减小很多。这里排不排序无所谓。<br /></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 3.2小目标完成</li>
+</ul>
+<p><a name="Ry4ji"></a></p>
+<h3 id="3-3-coordinator感知各个job任务运行完毕和map转reduce时机"><a href="#3-3-coordinator感知各个job任务运行完毕和map转reduce时机" class="headerlink" title="3.3 coordinator感知各个job任务运行完毕和map转reduce时机"></a>3.3 coordinator感知各个job任务运行完毕和map转reduce时机</h3><ul>
+<li>任务元数据管理</li>
+</ul>
+<p>​</p>
+<p>从coordinator视角看任务分发</p>
+<blockquote>
+<p>制作任务 -&gt; 放入队列 -&gt; worker来取</p>
+</blockquote>
+<p><br />如果worker维护任务的状态显然不合理，每个任务的运行开始时间，任务状态。这些内容worker没必要知晓，是coordinator用来判断任务超时，或者map转reduce的。因此用JobMetaInfo把Job + Job状态包装下</p>
+<blockquote>
+<p>制作任务 -&gt; 放入JobMetaInfo(元数据) -&gt; 放入队列 -&gt; worker来取</p>
+</blockquote>
+<p>​<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> JobMetaInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">    condition JobCondition</span><br><span class="line">    StartTime time.Time</span><br><span class="line">    JobPtr    *Job</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>condition job状态: 包含等待，运行，完成<br />StartTime ： 开始运行的时间（等待变为运行）<br />JobPtr  ： job内存地址（golang是值传递，用地址更高效）<br /><br><br />所有任务用map存储在JobMetaHolder,key是job的唯一id<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">type</span> JobMetaHolder <span class="keyword">struct</span> &#123;</span><br><span class="line">MetaMap <span class="keyword">map</span>[<span class="type">int</span>]*JobMetaInfo</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />针对这个JobMetaHolder的操作都可以安排上了，比如放入任务，任务状态更新，检查同一阶段任务是否完成<br /></p>
+<ul>
+<li>放入任务函数 putJob</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(j *JobMetaHolder)</span></span> putJob(JobInfo *JobMetaInfo) <span class="type">bool</span> &#123;</span><br><span class="line">	jobId := JobInfo.JobPtr.JobId</span><br><span class="line">	meta, _ := j.MetaMap[jobId]</span><br><span class="line">	<span class="keyword">if</span> meta != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;meta contains job which id = &quot;</span>, jobId)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		j.MetaMap[jobId] = JobInfo</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />任务发射方法，当channel给出任务后，元数据管理器对任务元数据进行状态变更和运行开始时间记录（后面超时任务有用）。和Kafka的InflightMessage有点像。<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(j *JobMetaHolder)</span></span> fireTheJob(jobId <span class="type">int</span>) <span class="type">bool</span> &#123;</span><br><span class="line">	ok, jobInfo := j.getJobMetaInfo(jobId)</span><br><span class="line">	<span class="keyword">if</span> !ok || jobInfo.condition != JobWaiting &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	jobInfo.condition = JobWorking</span><br><span class="line">	jobInfo.StartTime = time.Now()</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><br />检查当前阶段任务是否完成。因为每次制作jobs后，实在加锁情况下一股脑更新到元数据的，因此这边通过遍历先检查reduce完成未完成数量再检查map就能判断两种情况下的<br />完成情况。每次也会print 任务的数量信息方便调试<br /></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(j *JobMetaHolder)</span></span> checkJobDone() <span class="type">bool</span> &#123;</span><br><span class="line">	reduceDoneNum := <span class="number">0</span></span><br><span class="line">	reduceUndoneNum := <span class="number">0</span></span><br><span class="line">	mapDoneNum := <span class="number">0</span></span><br><span class="line">	mapUndoneNum := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> _, v := <span class="keyword">range</span> j.MetaMap &#123;</span><br><span class="line">		<span class="keyword">if</span> v.JobPtr.JobType == MapJob &#123;</span><br><span class="line">			<span class="keyword">if</span> v.condition == JobDone &#123;</span><br><span class="line">				mapDoneNum += <span class="number">1</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				mapUndoneNum++</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> v.condition == JobDone &#123;</span><br><span class="line">				reduceDoneNum++</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				reduceUndoneNum++</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;%d/%d map jobs are done, %d/%d reduce job are done\n&quot;</span>,</span><br><span class="line">		mapDoneNum, mapDoneNum+mapUndoneNum, reduceDoneNum, reduceDoneNum+reduceUndoneNum)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> (reduceDoneNum &gt; <span class="number">0</span> &amp;&amp; reduceUndoneNum == <span class="number">0</span>) || (mapDoneNum &gt; <span class="number">0</span> &amp;&amp; mapUndoneNum == <span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>coordinator的状态转换<br />每次当channel的长度为0的时候，去checkJobDone检查一下，当这个阶段所有任务都完成以后，进行状态转换并作出相应操作nextPhase()</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> nextPhase() &#123;</span><br><span class="line">    <span class="keyword">if</span> c.CoordinatorCondition == MapPhase &#123;</span><br><span class="line">    	c.makeReduceJobs()</span><br><span class="line">    	c.CoordinatorCondition = ReducePhase</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> c.CoordinatorCondition == ReducePhase &#123;</span><br><span class="line">   	 	c.CoordinatorCondition = AllDone</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>​<br /></p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+3.3小目标完成</p>
+</li>
+</ul>
+<p><br />3.4 coordinator 的任务分配函数<br /></p>
+<ul>
+<li>任务分配方法<br />任务分配方法是coordinator最核心的函数，worker每次来询问都会调用这个方法</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> DistributeJob(args *ExampleArgs, reply *Job) <span class="type">error</span> &#123;</span><br><span class="line">	mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> mu.Unlock()</span><br><span class="line">	fmt.Println(<span class="string">&quot;coordinator get a request from worker :&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> c.CoordinatorCondition == MapPhase &#123;</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(c.JobChannelMap) &gt; <span class="number">0</span> &#123;</span><br><span class="line">			*reply = *&lt;-c.JobChannelMap</span><br><span class="line">			<span class="keyword">if</span> !c.jobMetaHolder.fireTheJob(reply.JobId) &#123;</span><br><span class="line">				fmt.Printf(<span class="string">&quot;[duplicated job id]job %d is running\n&quot;</span>, reply.JobId)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			reply.JobType = WaittingJob</span><br><span class="line">			<span class="keyword">if</span> c.jobMetaHolder.checkJobDone() &#123;</span><br><span class="line">				c.nextPhase()</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> c.CoordinatorCondition == ReducePhase &#123;</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(c.JobChannelReduce) &gt; <span class="number">0</span> &#123;</span><br><span class="line">			*reply = *&lt;-c.JobChannelReduce</span><br><span class="line">			<span class="keyword">if</span> !c.jobMetaHolder.fireTheJob(reply.JobId) &#123;</span><br><span class="line">				fmt.Printf(<span class="string">&quot;job %d is running\n&quot;</span>, reply.JobId)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			reply.JobType = WaittingJob</span><br><span class="line">			<span class="keyword">if</span> c.jobMetaHolder.checkJobDone() &#123;</span><br><span class="line">				c.nextPhase()</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		reply.JobType = KillJob</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>worker完成任务调用的操作<br />这里使用了判断元数据的办法看看任务是否会重复完成，在后面的崩溃测试下，worker会失效，coordinator需要重新发放Jobg给另一个worker，加入刚才那个失效的worker恢复了然后写入回来，不能覆盖已经完成的数据(甚至都下一个阶段了)。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> JobIsDone(args *Job, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> mu.Unlock()</span><br><span class="line">	<span class="keyword">switch</span> args.JobType &#123;</span><br><span class="line">	<span class="keyword">case</span> MapJob:</span><br><span class="line">		ok, meta := c.jobMetaHolder.getJobMetaInfo(args.JobId)</span><br><span class="line">		<span class="comment">//prevent a duplicated work which returned from another worker</span></span><br><span class="line">		<span class="keyword">if</span> ok &amp;&amp; meta.condition == JobWorking &#123;</span><br><span class="line">			meta.condition = JobDone</span><br><span class="line">			fmt.Printf(<span class="string">&quot;Map task on %d complete\n&quot;</span>, args.JobId)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;[duplicated] job done&quot;</span>, args.JobId)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">case</span> ReduceJob:</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Reduce task on %d complete\n&quot;</span>, args.JobId)</span><br><span class="line">		ok, meta := c.jobMetaHolder.getJobMetaInfo(args.JobId)</span><br><span class="line">		<span class="comment">//prevent a duplicated work which returned from another worker</span></span><br><span class="line">		<span class="keyword">if</span> ok &amp;&amp; meta.condition == JobWorking &#123;</span><br><span class="line">			meta.condition = JobDone</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;[duplicated] job done&quot;</span>, args.JobId)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;wrong job done&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><a name="wwFmp"></a></p>
+<h3 id="3-5-加锁防止data-race"><a href="#3-5-加锁防止data-race" class="headerlink" title="3.5 加锁防止data race"></a>3.5 加锁防止data race</h3><p><br />由于我用了channel所以在任务分配队列实现了天然并发安全，但是在别的地方还是遇到了问题，比如Done函数通过mrcoordinator主线程去时不时读取coordinator的状态来判断是否结束死循环。还有在一个worker调coordinator拉取数据的时候，另一个worker调coordinator的checkJobDone()函数进行检查。因此在响应可能发生冲突的地方加锁。<br /></p>
+<p><a name="V9ad5"></a></p>
+<h3 id="3-6-crash-test"><a href="#3-6-crash-test" class="headerlink" title="3.6 crash test"></a>3.6 crash test</h3><p><br />&#x2F;&#x2F;未完待写，可以先去看看代码</p>
 
       
 
@@ -237,7 +380,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/02/19/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/02/20/MIT6.824%20Lab1%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -251,15 +394,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2022/02/19/test/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/02/20/21/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          test
+          《21世纪再读资本论》读书笔记
         
       </div>
     </a>
   
+  
+    <a href="/2022/02/20/t2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">t2</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
