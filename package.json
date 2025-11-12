@@ -1,9 +1,0 @@
-{
-  "name": "hexo-site",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "hexo": "^6.3.0",
-    "hexo-cli": "^4.2.0"
-  }
-}
